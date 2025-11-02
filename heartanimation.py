@@ -30,12 +30,12 @@ def main():
     plt.xkcd()
     load_matplotlib_local_fonts('xkcd-script.ttf')
     """Function Stolen from The Brain Maze"""
-    fig = plt.figure(figsize=(5,5)) 
+    fig = plt.figure(figsize=(3,3)) 
     fig.subplots_adjust(bottom=0.01, top=0.99, left=0.01, right=0.99)
 
     ax = plt.gca()
     ax.set_xlim(-2,2)
-    ax.set_ylim(-1.65,2.35)
+    ax.set_ylim(-1.625,2.375)
     fig.patch.set_facecolor('#ffebf8')
     ax.xaxis.set_ticks_position('none') 
     ax.yaxis.set_ticks_position('none') 
@@ -44,7 +44,7 @@ def main():
 
     k = 0
     line, = ax.plot(x,f(k,x),c='r',lw=2.)
-    text = ax.text(0.99, 0.01, '', ha='right', va='bottom',fontsize=10,transform=ax.transAxes)
+    text = ax.text(0.99, 0.01, '', ha='right', va='bottom',fontsize=6,transform=ax.transAxes)
 
     def update(i: int):
         k = np.power(2,i/20.)-1
