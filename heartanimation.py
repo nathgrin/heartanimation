@@ -8,8 +8,6 @@ import matplotlib.font_manager as font_manager
 import numpy as np
 import os
 
-def f(k,x):
-    return np.cbrt(np.power(x,2))+0.9*np.sin(k*x)*np.sqrt(3-x*x)
 def load_matplotlib_local_fonts(fname):
 
     # Load a font from TTF file, 
@@ -26,6 +24,26 @@ def load_matplotlib_local_fonts(fname):
         'font.size': 16,
         'font.sans-serif': prop.get_name(),
     })
+
+
+def f(k,x):
+    """Function Stolen from The Brain Maze"""
+    return np.cbrt(np.power(x,2))+0.9*np.sin(k*x)*np.sqrt(3-x*x)
+
+def kfunc(i: int) -> int:
+        p = 195 # end of first fase
+        q = 205 # middle
+        a,c = -0.627365,974.0234#-1.7744, 1200.445678
+        if i < p:
+            k = np.power(2,i/20.)-1
+        elif i > 2*q-p:
+            k = np.power(2,-(i-2*q)/20.)-1
+        else:
+            k = a*(i-q)**2. + c
+        return k
+
+
+
 def main():
     plt.xkcd()
     load_matplotlib_local_fonts('xkcd-script.ttf')
@@ -47,13 +65,13 @@ def main():
     text = ax.text(0.99, 0.01, '', ha='right', va='bottom',fontsize=6,transform=ax.transAxes)
 
     def update(i: int):
-        k = np.power(2,i/20.)-1
+        k = kfunc(i)#np.power(2,i/20.)-1
         line.set_ydata(f(k,x))
         text.set_text(r"$x^{2/3}+0.9\cdot\sin(%.01f x)\cdot\sqrt{3-x^2}$"%k)
         return (line)
 
-    ani = animation.FuncAnimation(fig=fig, func=update, frames=200, interval=60)
-    ani.save("hartje.gif",dpi=300)
+    ani = animation.FuncAnimation(fig=fig, func=update, frames=410, interval=60)
+    ani.save("hartje_loop_compr.gif",dpi=150)
     plt.show()
 
 
